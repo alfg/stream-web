@@ -1,10 +1,13 @@
 import React from 'react'
+import { Link } from 'react-router';
 import 'isomorphic-fetch';
+import storage from '../core/Storage';
 
 export default class extends React.Component {
 
   constructor(props) {
     super(props);
+    this.storage = storage;
     this.state = {
       title: '',
       type: '',
@@ -51,7 +54,7 @@ export default class extends React.Component {
         "Content-Type": "application/json"
       }
     }
-    const res = await fetch('http://127.0.0.1:4000/v1/streams', options);
+    const res = await fetch('/api/stream/create', options);
     const data = await res.json();
 
     console.log(data);
@@ -59,19 +62,17 @@ export default class extends React.Component {
 
     if (res.status == 201) {
       this.setState({ data: data });
-      window.store = data;
+      this.storage.setItem('streamData', data, () => {
+        console.log('Storing data', data);
+      });
+
     } else {
-      console.log(data.validation_errors);
-      this.setState({ errors: data.validation_errors })
+      console.log('errors', data);
+      this.setState({ errors: data.errors });
     }
   }
 
   render () {
-    // const errors = this.state.errors.map((v, i, arr) => {
-    //   <div>test</div>
-    // });
-    console.log(this.state.errors);
-
     return (
         <div className="container">
           <div className="header">
@@ -125,7 +126,7 @@ export default class extends React.Component {
                 className="u-full-width"
                 placeholder=""
                 onChange={this.handleChange}></textarea>
-              <label className="">
+              <label>
                 <input type="checkbox"
                   name="_private"
                   defaultChecked={this.state.private}
@@ -137,7 +138,7 @@ export default class extends React.Component {
               { this.state.data &&
               <div>
                 <h4>Your Stream is ready for casting!</h4>
-                <Link href="/dashboard"><button className="button-secondary">Go to Dashboard</button></Link>
+                <Link to="/dashboard"><button className="button-secondary">Go to Dashboard</button></Link>
               </div> }
 
               { this.state.errors && Object.keys(this.state.errors).map((k, i) => {

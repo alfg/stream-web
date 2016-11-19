@@ -11,9 +11,9 @@ import NotFound from './components/NotFound';
 const Routes = (props) => (
   <Router {...props}>
     <Route path="/" component={App}>
-      <Route path="/create" components={{content: Create}} />
-      <Route path="/live/:channel" component={Live} />
-      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/create" components={{ content: Create }} />
+      <Route path="/live/:channel" components={{ content: Live }} />
+      <Route path="/dashboard" components={{ content: Dashboard }} />
       <Route path="*" component={NotFound} />
     </Route>
   </Router>
