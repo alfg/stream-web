@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router';
 import './StreamList.css';
 
 export default class extends React.Component {
@@ -11,10 +12,10 @@ export default class extends React.Component {
   }
 
   render () {
-    console.log(this.props);
     const streamItems = this.props.streams.map((v, i, arr) => {
+      console.log(v);
       return (
-        <StreamItem key={i} />
+        <StreamItem key={i} {...v} />
       )
     });
 
@@ -28,14 +29,15 @@ export default class extends React.Component {
 
 class StreamItem extends React.Component {
   render () {
+    const { title, stream_name } = this.props;
     return (
         <div>
-          <a className="Playlist four columns" href="#">
+          <Link className="Playlist four columns" to={`/live/${stream_name}`}>
             <div className="PlaylistItem">
               <img src="http://placehold.it/200x200" />
-              <h5>Stream One</h5>
+              <h5>{title}</h5>
             </div>
-          </a>
+          </Link>
         </div>
     )
   }

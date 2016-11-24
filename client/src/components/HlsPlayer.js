@@ -16,10 +16,8 @@ export default class extends React.Component {
     const video = this.refs.video;
 
     const config = {
-      // manifestLoadingTimeOut: 10000,
-      // manifestLoadingMaxRetry: 1,
-      // manifestLoadingRetryDelay: 5000,
-      // manifestLoadingMaxRetryTimeout : 10000,
+      manifestLoadingRetryDelay: 5000,
+      manifestLoadingMaxRetryTimeout: 10000
     };
 
     const hls = new Hls(config);

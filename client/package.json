@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "hls.js": "^0.6.9",
+    "hls.js": "^0.6.10",
     "localforage": "^1.4.3",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
