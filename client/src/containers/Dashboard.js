@@ -12,7 +12,7 @@ export default class extends React.Component {
       store: null
     }
     this.storage = storage;
-    this.checkInterval = 5000;
+    this.heartbeatInterval = 5000;
   }
 
   componentDidMount() {
@@ -26,11 +26,11 @@ export default class extends React.Component {
         this.setState({ store: data });
       }
       const stream = this.state.store.stream.stream_name;
-      this.checkStream(stream);
+      this.setHeartbeat(stream, this.heartbeatInterval);
     });
   }
 
-  checkStream(name) {
+  setHeartbeat(name, interval) {
     const options = {
       method: 'GET',
       headers: {
@@ -39,13 +39,15 @@ export default class extends React.Component {
     }
     const url = `/api/stream/${name}/active`;
 
-    setInterval(() => {
+    const fn = () => {
       fetch(url, options).then((response) => {
         response.json().then((json) => {
           this.setState({ streamReady: json.active });
         });
       });
-    }, this.checkInterval);
+    }
+    setInterval(fn, this.heartbeatInterval);
+    fn();
   }
 
   render () {

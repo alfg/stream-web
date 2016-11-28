@@ -117,6 +117,7 @@ export default class extends React.Component {
                     <option value="gaming">Gaming</option>
                     <option value="coding">Coding</option>
                     <option value="live-event">Live Event</option>
+                    <option value="other">Other</option>
                   </select>
                 </div>
               </div>
@@ -125,6 +126,7 @@ export default class extends React.Component {
                 id="description"
                 className="u-full-width"
                 placeholder=""
+                name="description"
                 onChange={this.handleChange}></textarea>
               <label>
                 <input type="checkbox"
