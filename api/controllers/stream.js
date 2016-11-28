@@ -12,7 +12,7 @@ const stream = {
   },
 
   featuredStreams: function(req, res) {
-    const url = `${config.streamApi}/streams`;
+    const url = `${config.streamApi}/streams/featured`;
     fetch(url)
       .then(function(response) {
         response.json().then(function(json) {

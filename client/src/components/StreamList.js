@@ -28,13 +28,18 @@ export default class extends React.Component {
 }
 
 class StreamItem extends React.Component {
+
+  fallbackImage(e) {
+    e.target.src = 'http://placehold.it/200x200'
+  }
+
   render () {
-    const { title, stream_name } = this.props;
+    const { title, stream_name, thumbnail } = this.props;
     return (
         <div>
           <Link className="Playlist four columns" to={`/live/${stream_name}`}>
             <div className="PlaylistItem">
-              <img src="http://placehold.it/200x200" />
+              <img src={thumbnail} onError={this.fallbackImage} />
               <h5>{title}</h5>
             </div>
           </Link>
