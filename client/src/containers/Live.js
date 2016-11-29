@@ -12,7 +12,7 @@ export default class extends React.Component {
       streamReady: false,
       streamData: null
     }
-    this.heartbeatInterval = 5000;
+    this.heartbeatInterval = 10000;
   }
 
   componentWillMount() {
@@ -59,7 +59,6 @@ export default class extends React.Component {
   render () {
     const { channel } = this.props.params;
     const streamData = this.state.streamData;
-    const videoUrl = `http://192.168.99.100:8080/live/${channel}.m3u8`;
     return (
       <div className="list">
         <div className="container">
@@ -70,7 +69,7 @@ export default class extends React.Component {
               <p>{streamData.description}</p>
             </div>
           }
-          { this.state.streamReady && <HlsPlayer url={videoUrl} /> }
+          { this.state.streamReady ? <HlsPlayer url={streamData.video_url} /> : <h2>Offline</h2> }
         </div>
       </div>
     )

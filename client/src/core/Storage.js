@@ -24,6 +24,14 @@ export default Storage = {
     .catch( (err) => {
       cb(err);
     });
-  }
+  },
 
+  exists(cb) {
+    localforage.length().then((num) => {
+      cb(null, num > 0);
+    })
+    .catch((err) => {
+      cb(err);
+    });
+  }
 }

@@ -9,6 +9,7 @@ export default class extends React.Component {
     super();
     this.state = {
       streamReady: false,
+      streamData: null,
       store: null
     }
     this.storage = storage;
@@ -16,8 +17,6 @@ export default class extends React.Component {
   }
 
   componentDidMount() {
-    // const store = this.props.store;
-    // const videoUrl = `http://192.168.99.100:8080/live/${store.stream_name}.m3u8`;
   }
 
   componentWillMount() {
@@ -27,6 +26,24 @@ export default class extends React.Component {
       }
       const stream = this.state.store.stream.stream_name;
       this.setHeartbeat(stream, this.heartbeatInterval);
+      this.getContextData(this.state.store.stream.stream_name);
+
+    });
+  }
+
+  getContextData(channel) {
+    const options = {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+    const url = `/api/stream/${channel}`;
+
+    fetch(url, options).then((response) => {
+      response.json().then((json) => {
+        this.setState({ streamData: json });
+      });
     });
   }
 
@@ -55,11 +72,10 @@ export default class extends React.Component {
       return null;
     }
 
-    const stream = this.state.store.stream;
-    const streamUrl = `rtmp://192.168.99.100:1935/stream`;
-    const key = `${stream.stream_name}?key=${stream.stream_key}`;
-    const shareUrl = `http://127.0.0.1:3000/live/?stream=${stream.stream_name}`;
-    const videoUrl = `http://192.168.99.100:8080/live/${stream.stream_name}.m3u8`;
+    const streamStore = this.state.store.stream;
+    const key = `${streamStore.stream_name}?key=${streamStore.stream_key}`;
+
+    const streamData = this.state.streamData;
 
     return (
         <div className="container">
@@ -74,7 +90,7 @@ export default class extends React.Component {
               <tbody>
                 <tr>
                   <td>Stream URL</td>
-                  <td><span>{streamUrl}</span></td>
+                  <td><span>{streamData.stream_rtmp_url}</span></td>
                   <td>Set your broadcasting client to use this URL.</td>
                 </tr>
                 <tr>
@@ -84,14 +100,14 @@ export default class extends React.Component {
                 </tr>
                 <tr>
                   <td>Share URL</td>
-                  <td>{shareUrl}</td>
+                  <td>{streamData.stream_url}</td>
                   <td>Share this URL to your viewers!</td>
                 </tr>
               </tbody>
             </table>
 
             <h4>Preview</h4>
-            { this.state.streamReady && <HlsPlayer url={videoUrl} /> }
+            { this.state.streamReady && <HlsPlayer url={streamData.video_url} /> }
           </div>
         </div>
     )
