@@ -12,6 +12,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api', routes);
 
+// Serve build static assets if in production or docker.
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
+
 app.set('port', (process.env.API_PORT || 3001));
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console

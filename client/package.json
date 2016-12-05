@@ -1,6 +1,6 @@
 {
-  "name": "cast",
-  "version": "0.1.0",
+  "name": "cast-web-client",
+  "version": "0.0.1",
   "proxy": "http://localhost:3001/",
   "private": true,
   "devDependencies": {
@@ -26,5 +26,6 @@
     "type": "git"
   },
   "author": "Alfred Gutierrez",
-  "license": "MIT"
+  "license": "MIT",
+  "description": "Cast Web Client."
 }
