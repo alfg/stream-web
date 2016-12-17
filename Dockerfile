@@ -17,7 +17,7 @@ RUN cd /opt/stream-api && \
 # Install and build static frontend.
 RUN cd /opt/stream-api/client && \
     npm install && \
-    npm build
+    npm run build
 
 # Cleanup.
 RUN apk del gcc g++ && \
