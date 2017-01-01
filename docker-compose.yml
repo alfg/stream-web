@@ -4,4 +4,4 @@ stream-web:
     - "3001:3001"
   environment:
     - API_PORT=3001
-    - STREAM_API_HOST=http://138.68.0.179:4000/v1
+    - STREAM_API_HOST=http://api.streamcat.tv/v1

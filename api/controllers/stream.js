@@ -1,74 +1,43 @@
 import fetch from 'isomorphic-fetch';
 import request from 'request';
 import config from 'config';
+import streamService from '../services/stream';
 
 const stream = {
 
   streams: function(req, res) {
-    fetch('/api/featured-streams')
-      .then((response) => {
-        res.json({ streams: res.json() });
-      });
+    streamService.featuredStreams(function(data) {
+      res.json({ streams: data });
+    })
   },
 
   featuredStreams: function(req, res) {
-    const url = `${config.streamApi}/streams/featured`;
-    fetch(url)
-      .then(function(response) {
-        response.json().then(function(json) {
-          console.log(json);
-          res.json({ streams: json });
-        })
-      });
+    streamService.featuredStreams(function(data) {
+      res.json({ streams: data });
+    })
   },
 
   createStream: function(req, res) {
-    const { title, type, description, _private, stream_name } = req.body;
-    const url = `${config.streamApi}/streams`;
-    const options = {
-      method: 'POST',
-      body: JSON.stringify({
-        title,
-        type,
-        description,
-        private: _private,
-        stream_name
-      }),
-      headers: {
-        "Content-Type": "application/json"
+    streamService.createStream(req.body, function(status, data) {
+      if (status === 201) {
+        res.status(201).json({ stream: data });
+      } else {
+        res.status(400).json({ errors: data });
       }
-    }
-    fetch(url, options)
-      .then(function(response) {
-        response.json().then(function(json) {
-          if (response.ok) {
-            res.status(201).json({ stream: json });
-          } else {
-            res.status(400).json({ errors: json });
-          }
-        }, function(error) {
-          console.log(error);
-        })
-      });
+    });
   },
 
   getStream: function(req, res) {
-    const url = `${config.streamApi}/streams/${req.params.name}`;
-    fetch(url).then(function(response) {
-        response.json().then(function(json) {
-          res.json(json);
-        })
-      });
+    streamService.getStream(req.params.name, function(data) {
+      res.json(data);
+    });
   },
 
   isStreamActive: function(req, res) {
-    const url = `${config.streamApi}/streams/${req.params.name}/active`;
-    fetch(url).then(function(response) {
-        response.json().then(function(json) {
-          res.json(json);
-        })
-      });
-  },
+    streamService.isStreamActive(req.params.name, function(data) {
+      res.json(data);
+    });
+  }
 
 }
 
