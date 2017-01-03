@@ -1,3 +1,4 @@
 {
-  "streamApi": "STREAM_API_HOST"
+  "streamApi": "STREAM_API_HOST",
+  "streamApiV1": "STREAM_API_V1_HOST"
 }
