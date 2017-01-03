@@ -1,5 +1,6 @@
 {
-  "streamApi": "http://localhost:4000/v1",
+  "streamApi": "http://localhost:4000",
+  "streamApiV1": "http://localhost:4000/v1",
   "liveUrl": "",
   "api_key": "feefa06e1dcdf222697f",
   "api_secret": "1fea0892c1f7c6c9b7de31d477e159e8763dc709"

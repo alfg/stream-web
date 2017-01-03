@@ -4,6 +4,25 @@ import config from 'config';
 
 const stream = {
 
+  getAuth: function(callback) {
+    const key = new Buffer(`${config.api_key}:${config.api_secret}`).toString('base64');
+    const url = `${config.streamApi}/token`;
+    const options = {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${key}`
+      }
+    };
+    fetch(url, options)
+      .then((response) => {
+        response.json().then(function(json) {
+
+          var token = json.token;
+          callback(token);
+        })
+      });
+  },
+
   streams: function(callback) {
     fetch('/api/featured-streams')
       .then((response) => {
@@ -12,11 +31,10 @@ const stream = {
   },
 
   featuredStreams: function(callback) {
-    const url = `${config.streamApi}/streams/featured`;
+    const url = `${config.streamApiV1}/streams/featured`;
     fetch(url)
       .then(function(response) {
         response.json().then(function(json) {
-          console.log(json);
           callback(json);
         })
       });
@@ -24,7 +42,7 @@ const stream = {
 
   createStream: function(body, callback) {
     const { title, type, description, _private, stream_name } = body;
-    const url = `${config.streamApi}/streams`;
+    const url = `${config.streamApiV1}/streams`;
     const options = {
       method: 'POST',
       body: JSON.stringify({
@@ -38,22 +56,29 @@ const stream = {
         "Content-Type": "application/json"
       }
     }
-    fetch(url, options)
-      .then(function(response) {
-        response.json().then(function(json) {
-          if (response.ok) {
-            callback(201, json);
-          } else {
-            callback(400, json);
-          }
-        }, function(error) {
-          console.log(error);
-        })
+
+    // Creating a stream requires an auth token.
+    // TODO: Cache.
+    stream.getAuth(function(token) {
+      options.headers['Authorization'] = `Bearer ${token}`
+
+      fetch(url, options)
+        .then(function(response) {
+          response.json().then(function(json) {
+            if (response.ok) {
+              callback(201, json);
+            } else {
+              callback(400, json);
+            }
+          }, function(error) {
+            console.log(error);
+          })
+        });
       });
   },
 
   getStream: function(streamName, callback) {
-    const url = `${config.streamApi}/streams/${streamName}`;
+    const url = `${config.streamApiV1}/streams/${streamName}`;
     fetch(url).then(function(response) {
         response.json().then(function(json) {
           callback(json);
@@ -62,7 +87,7 @@ const stream = {
   },
 
   isStreamActive: function(streamName, callback) {
-    const url = `${config.streamApi}/streams/${streamName}/active`;
+    const url = `${config.streamApiV1}/streams/${streamName}/active`;
     fetch(url).then(function(response) {
         response.json().then(function(json) {
           callback(json);

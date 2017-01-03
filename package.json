@@ -20,7 +20,8 @@
     "express": "4.13.3",
     "foreman": "^2.0.0",
     "fs": "0.0.2",
-    "isomorphic-fetch": "^2.2.1"
+    "isomorphic-fetch": "^2.2.1",
+    "node-cache": "^4.1.1"
   },
   "scripts": {
     "start": "nf start -p 3000",
