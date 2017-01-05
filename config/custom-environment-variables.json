@@ -1,4 +1,6 @@
 {
   "streamApi": "STREAM_API_HOST",
-  "streamApiV1": "STREAM_API_V1_HOST"
+  "streamApiV1": "STREAM_API_V1_HOST",
+  "api_key": "API_KEY",
+  "api_secret": "API_SECRET"
 }
