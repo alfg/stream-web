@@ -30,7 +30,7 @@ export default class extends React.Component {
 class StreamItem extends React.Component {
 
   fallbackImage(e) {
-    e.target.src = 'http://placehold.it/200x200'
+    e.target.src = 'http://placehold.it/320x180?text=No+Preview'
   }
 
   render () {

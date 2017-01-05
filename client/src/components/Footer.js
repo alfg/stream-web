@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router';
 import './Footer.css';
 
 export default class extends React.Component {
@@ -15,10 +16,10 @@ export default class extends React.Component {
       <div>
           <footer>
             <ul>
-              <li><a className="FooterLink" href="#">About</a></li>
-              <li><a className="FooterLink" href="#">Github</a></li>
-              <li><a className="FooterLink" href="#">API</a></li>
-              <li><a className="FooterLink" href="#">Terms</a></li>
+              <li><Link to="/about">About</Link></li>
+              <li><a href="https://github.com/streamcatTV">Github</a></li>
+              <li><a href="https://developers.streamcat.tv">API</a></li>
+              <li><Link to="/terms">Terms</Link></li>
             </ul>
           </footer>
       </div>

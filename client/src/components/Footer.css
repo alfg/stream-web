@@ -1,4 +1,4 @@
-ul {
+footer ul {
   margin: 0;
   padding: 0;
   text-align: center;
@@ -12,12 +12,12 @@ ul {
   color: #222;
 }
 
-li {
+footer li {
   display: inline-block;
   padding: 0 6px;
 }
 
-.FooterLink {
+footer li a {
   text-transform: uppercase;
   font-size: 11px;
   font-weight: 600;
